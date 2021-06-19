@@ -132,7 +132,9 @@
                 }
                 else{
 					if(response.message){
+						righthere.innerHTML = "	<div class='alert alert-success' style=' font-size:14px;'>Uploaded Successfully!</div>";
 						alert(response.message)
+						
                     window.location = "/redirect"
                 }else{
 					righthere.innerHTML = "	<div class='alert alert-warning' style='color: red; font-size:14px;'>Network error. Slow connection, try again!</div>";
