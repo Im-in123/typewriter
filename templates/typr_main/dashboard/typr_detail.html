@@ -1,0 +1,193 @@
+
+
+
+
+
+
+  {% extends 'typr_main/dashboard/dashbase.html' %}
+{%block title%} typewriter. {% endblock %}
+{% load static %}
+
+{% block navi %}
+<ul>
+	<li ><a href="{%url 'typr_main:dashboard'%}">Home</a></li>
+	<li><a href="{%url 'typr_main:order'%}">Order</a></li>
+	<li><a href="{%url 'typr_main:pending'%}">
+		Pending Orders
+		{% if pending_count != 0 %}
+	  <span style="color: coral;">({{pending_count}})</span>
+		{% else %}
+		
+	{% endif %}
+	</a></li>
+	<li><a href="{%url 'typr_main:in_progress'%}">In progress
+			{% if in_progress_count != 0 %}
+			 <span style="color: coral;">({{in_progress_count}})</span>
+			{% else %}
+			
+		{% endif %}
+	</a></li>
+	<li><a href="{%url 'typr_main:completed'%}">Completed Orders
+			{% if completed_count != 0 %}
+			<span style="color: coral;">({{completed_count}})</span>
+			{% else %}
+			
+		{% endif %}
+	</a></li>
+	<li><a href="{%url 'typr_main:payment'%}">Payment</a></li>
+	<li><a href="{%url 'typr_main:profile'%}">Profile</a></li>
+	<li><a href="{%url 'typr_main:u_settings'%}">Settings</a></li>
+	<li><a href="{%url 'typr_users:logout'%}">Logout</a></li>
+	</ul> <br>
+	{% endblock %}
+
+	   {% block me %}
+     <h1 style="font-family:Poppins, Arial, sans-serif;" >Details</h2>
+      <br>
+        
+    <h4 style="text-align: center; color:black" style="font-family:Poppins, Arial, sans-serif; font: size 17px;" >Folder: {{collection.collname}} </h4>
+    {% if collection.colldone ==  True%}
+    <p>This folder has successfully been completed!</p>
+    {% else %}
+    <p>This folder is {{collection.job_status}}</p>
+    {% endif%}
+    
+    <br>
+  
+    {% if file_check == True %}
+  
+    <br>
+    <br>
+    {% for file in c_files %}
+    <div class="col mb-4">
+      <div class="card">
+        
+           
+
+        <div class="card-body">
+          <p> <a href="data:application/{{file.ext}};base64, {{file.c_file}}" download ="{{file.name}}">Download {{file.name}}</a></p>
+           
+          <p style="font-size: 9px;">Previewing.. Your browser might not be supported</p>
+          <object data="data:application/{{file.ext}};base64,{{file.c_file}}"
+          width="100%" height="400px" type="application/{{file.ext}}" ></object>
+         
+        </div>
+      </div>
+   <hr>
+    </div>
+   
+    {% endfor %}
+    {% else %}
+    <li>Finished Word document appears here once finished</li>
+    {% endif %}
+  <br>
+ <div class="row row-cols-1 row-cols-md-3">
+   <p style="font-size: 17px; font-family:Poppins, Arial, sans-serif;" >Your images</p>
+      {% for img in second_fast %}
+      <div class="col mb-4">
+        <div class="card">
+          <img src="{{img.imageby.url}}" class="card-img-top" alt="{{img.name}}" style="width: 100%; height:150px;">
+       
+          <div class="card-body">
+            <p class="card-title">{{img.image.name| linebreaksbr | truncatechars:27 }}</p>
+            <p class="card-text"><small class="text-muted"> Typed: {{img.typed}}</small></p>
+          </div>
+        </div>
+      </div>
+     
+      {% endfor %}
+    
+    </div>
+    <div>
+        {% if file_check == True %}
+    <hr>
+    <h3>Delete this folder? </h3>
+    <p>
+        Your work will be lost if you procced!! Make sure you have downloaded your document first!!
+    </p>
+   
+    <br>
+    <p><a href="{% url 'typr_main:deletecoll2' collection.id %}" style="color:orangered" onclick="return confirm('Are you sure?')"> Delete </a></p>
+
+    </div>
+    {% endif %}
+  
+
+ 
+
+
+
+     {%endblock%}
+
+     {% block scrippy %}
+     <script>
+
+      // function base64ToArrayBuffer(base64) {
+         // var binaryString = window.atob(base64);
+         // var binaryLen = binaryString.length;
+        //  var bytes = new Uint8Array(binaryLen);
+         // for (var i = 0; i < binaryLen; i++) {
+         //    var ascii = binaryString.charCodeAt(i);
+           //  bytes[i] = ascii;
+         // }
+        //  return bytes;
+    //   }
+
+
+  
+
+     // var dabyt = document.getElementsByName("u")[0]
+     // byt= dabyt.value
+     // extby = dabyt.id
+      //var blob = new Blob([byt], {type: "application/"+ extby});
+    //  var link = document.createElement("a");
+      //link.href = window.URL.createObjectURL(blob);
+    //  link.innerHTML = 'Download PDF file';
+    //  link.download = "myFileName.pdf";
+//
+    //  link.href = 'data:application/pdf;base64,'+ byt;
+      //document.body.appendChild(link);
+      //var atag = document.getElementById("tome")
+      //atag.href = window.URL.createObjectURL(blob);
+      //link.download = "myFileName.pdf";
+    
+
+
+
+    //  link.click();
+
+    // console.log("finished")
+     </script>
+   
+     {% endblock %}
+
+     <!-- Document doc = new Document();
+     DocumentBuilder builder = new DocumentBuilder(doc);
+     builder.InsertHtml(html);
+     MemoryStream stream = new MemoryStream();
+     doc.Save(stream, SaveFormat.Docx);
+     byte[] b = stream.ToArray(); -->
+
+
+<!-- 
+     <a href="{{ file.c_file }}" download>Dowload {{file.name}}</a>
+     <p class="card-text"><small class="text-muted"> Finished: {{file.finished}}</small></p>
+     <embed src="application/{{file.ext}}, {{file.c_file}}" width="800px" height="2100px" type="application/{{file.ext}}"/> -->
+
+       
+    <!-- <div class="row row-cols-1 row-cols-md-3">
+      {% for img in images %}
+      <div class="col mb-4">
+        <div class="card">
+          <img src="data:image/jpeg;base64, {{img.imageby}}" class="card-img-top" alt="{{img.name}}" style="width: 100%; height:150px;">
+       
+          <div class="card-body">
+            <p class="card-title">{{img.image.name| linebreaksbr | truncatechars:27 }}</p>
+            <p class="card-text"><small class="text-muted"> Typed: {{img.typed}}</small></p>
+          </div>
+        </div>
+      </div>
+     
+      {% endfor %}
+    
+    </div> -->

@@ -1,0 +1,166 @@
+
+{% extends 'typr_main/dashboard/dashbase.html' %}
+{%block title%} typewriter. {% endblock %}
+{% load static %}
+{% block navi %}
+
+<ul>
+	<li><a href="{%url 'typr_main:dashboard'%}">Home</a></li>
+	<li><a href="{%url 'typr_main:order'%}">Order</a></li>
+	<li><a href="{%url 'typr_main:pending'%}">Pending Orders
+			{% if pending_count != 0 %}
+	  <span style="color: coral;">({{pending_count}})</span>
+		{% else %}
+		
+	{% endif %}
+
+
+	</a></li>
+	<li><a href="{%url 'typr_main:in_progress'%}">In progress 
+			{% if in_progress_count != 0 %}
+			 <span style="color: coral;">({{in_progress_count}})</span>
+			{% else %}
+			
+		{% endif %}
+
+	</a></li>
+	<li><a href="{%url 'typr_main:completed'%}">Completed Orders
+			{% if completed_count != 0 %}
+			<span style="color: coral;">({{completed_count}})</span>
+			{% else %}
+			
+		{% endif %}
+
+	</a></li>
+	<li class="colorlib-active"><a href="{%url 'typr_main:payment'%}">Payment</a></li>
+	<li><a href="{%url 'typr_main:profile' %}">Profile</a></li>
+	<li><a href="{%url 'typr_main:u_settings'%}">Settings</a></li>
+	<li><a href="{%url 'typr_users:logout'%}">Logout</a></li>
+</ul><br>
+{%endblock%}
+
+	
+
+	   {% block me %}
+	   <div>
+	    
+	<h3>Payment</h3>
+	{% if messages %}
+	{% for message in messages %}
+		<div class="alert alert-{{ message.tags }}" style="color: red; font-size:14px;">
+			{{ message }}
+		</div>
+	{% endfor %}
+   {% endif %}
+	<br>
+	<br>
+
+	{% if collection %}
+	<div style="font-size: small; ">
+			<ul class="list-group" >
+					<li class="list-group-item"><b>Your phone number:</b> +233 {{request.user.profile.phonenumber}}</li>
+				  </ul>
+			<ul class="list-group">
+					<li class="list-group-item" style=";"><b>Total Price:</b> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; 
+						{%if total%} GHC {{total}}{%else%} <p>Please wait... calculation might take 5 minutes or less. Call +233 550742960 if it takes too long.</p> {% endif%}   </li>
+					  </ul>
+				<ul class="list-group">
+					<li class="list-group-item"><b>Amount paid:</b> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; GHC {{dep}}</li>
+						  </ul>
+	</div>
+	
+<br>
+<div style="font-size: small;">
+<form class="form-inline" method="POST" action="" enctype="multipart/form-data">
+	{% csrf_token %}
+	<label for="bn"><li>Please upload a screenshot of mobile money payment as proof of payment</li></label>
+	<input type="file" id="bn" name="images"  multiple required>
+	
+		<br>
+	<div class="form-group mx-sm-3 mb-2">
+	<br>
+	</div>
+	<input type="hidden" name="color" value ="{{cc}}" >
+	<button type="submit" class="btn btn-primary mb-2">Upload proof</button>
+  </form>
+</div>
+<br>
+{% else %}
+Nothing to see here, you dont have any unpaid order.
+<br>
+<br>
+{% endif%}
+	
+{% for i in collection.all %}
+	 
+	
+	
+	<div class="list-group">
+		<a href="{% url 'typr_main:typr_detail' i.id %}" class="list-group-item list-group-item-action primary">
+		  <div class="d-flex w-100 justify-content-between">
+			<h5 class="mb-1"  style="font-size:15px;">{{i.collname}}</h5>
+			<small>{{i.created_date | timesince}} ago</small>
+		  </div>
+		  <p class="mb-1"></p>
+		  <small>Job Status: {{i.job_status}}</small><br>
+		  {% if i.estimated_amount %}
+		  <small>Amount: GHc {{i.estimated_amount}}</small><br>
+		  {% else %}
+		  <small>Amount: Please wait... calculation might take 10 minutes or less</small><br>
+		  {% endif %}
+	
+		</a>
+		
+	  </div>
+	
+	{% endfor%}
+<br>
+<br>
+
+	<div>
+			<hr>
+			
+		<h5>How To Pay</h5>
+		<div class="alert alert-success" role="alert">
+			
+				
+						1. Note: You can only pay with the phone number you have currently registered with this account
+				
+			  </div>
+			  <div class="alert alert-success" role="alert">
+					
+					2. Send payment to 0550742960(MTN) registered to Ebenezer  Yamoah.
+					
+				  </div>
+				  <div class="alert alert-success" role="alert">
+					
+						3. Take a screenshot of the payment made and upload with upload box above.(The upload box appears one you make an order)
+						
+					  </div>
+					  <div class="alert alert-success" role="alert">
+							
+							4. Typing will then be started after confirmation of payment!
+							
+						  </div>
+
+</div>
+<br>
+
+	<div>
+		<hr>
+			<h5>Typing Charge</h5>
+			<div class="alert alert-warning" role="alert">
+					1. Charge is GHC 1 for a page, using our 2.0 typing space standard!
+				  </div>
+				  <div class="alert alert-warning" role="alert">
+						2. You need to make payment of the total amount for your typing to begin!
+					  </div>
+					  <div class="alert alert-warning" role="alert">
+							3. Might take a while for payment to be confirmed!
+						  </div>
+	
+	</div> 
+</div>
+
+	   {%endblock%}
+

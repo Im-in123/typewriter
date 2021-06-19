@@ -1,0 +1,150 @@
+
+
+
+{% extends 'typr_main/dashboard/dashbase.html' %}
+{%block title%} typewriter. {% endblock %}
+{% load static %}
+
+{% block navi %}
+<ul>
+	<li ><a href="{%url 'typr_main:dashboard'%}">Home</a></li>
+	<li class="colorlib-active"><a href="{%url 'typr_main:order'%}">Order</a></li>
+	<li><a href="{%url 'typr_main:pending'%}">Pending Orders
+			{% if pending_count != 0 %}
+			<span style="color: coral;">({{pending_count}})</span>
+			  {% else %}
+			  
+		  {% endif %}
+	</a></li>
+	<li><a href="{%url 'typr_main:in_progress'%}">In progress
+			{% if in_progress_count != 0 %}
+			<span style="color: coral;">({{in_progress_count}})</span>
+		   {% else %}
+		   
+	   {% endif %}
+	</a></li>
+	<li><a href="{%url 'typr_main:completed'%}">Completed Orders
+			{% if completed_count != 0 %}
+			<span style="color: coral;">({{completed_count}})</span>
+			{% else %}
+			
+		{% endif %}
+	</a></li>
+	<li><a href="{%url 'typr_main:payment'%}">Payment</a></li>
+	<li><a href="{%url 'typr_main:profile'%}">Profile</a></li>
+	<li><a href="{%url 'typr_main:u_settings'%}">Settings</a></li>
+	<li><a href="{%url 'typr_users:logout'%}">Logout</a></li>
+	</ul><br>
+	{% endblock %}
+
+	{% block hi %}
+
+	   <div class="hero-wrap js-fullheight" style="background-image: url({% static 'images/video-image.jpg'%});" data-stellar-background-ratio="0.5">
+		  
+		   <div class="js-fullheight d-flex justify-content-center align-items-center">
+			   <div class="col-md-8 text text-center">
+				
+				   <div class="desc" >
+					   <center>
+						   <p style="color:gray;  background:white; border-radius:20px; font-size:20px;"  >
+						   Upload pictures/screenshots/scan
+						   </p>
+					   </center>
+					   <div id="righthere"></div>
+
+		
+					  <br>
+					   <form class="form-inline"  id="myformid" method="POST" action="" enctype="multipart/form-data" style="font-size:14px;">
+						{% csrf_token %}
+						<label for="oni"  style="font-size:14px">Images:</label >
+						<input type="file" id="oni" name="images"  multiple required>
+						
+				 			<br>
+							
+						<div class="form-group mx-sm-3 mb-2">
+						<br>
+						  <span class="input-group-text" id="addon-wrapping" style="font-size:14px">Folder Name :</span> <input type="text" class="form-control"  style="height:11px;" id="inputPassword2" name="collection" placeholder="type any name..."  required>
+						</div>
+						<button type="submit" class="btn btn-primary mb-2" style="font-size:14px">Upload</button>
+					  </form>
+				
+					   <div style="font-size: 12px; opacity:0.7; line-height:0.1 rem; word-spacing:1px;">
+							<div class="alert alert-warning" role="alert">
+									1. To upload your images/pictures to be typed, click on choose files and select the files.
+								  </div>
+								  <div class="alert alert-warning" role="alert">
+									2. Provide a name to be used as workspace for the selected files in the folder name field. Click on upload.
+								  </div>
+								
+									  <div class="alert alert-warning" role="alert">
+									3.  You will be automatically redirected to the payment section to complete your order.
+									  </div>
+									
+						</div> 
+					
+					
+				   </div>
+
+			   </div>
+		   </div>
+	   </div> 
+	   {% endblock %}
+
+	   {% block me %}
+	 
+	   <div>
+
+	   </div>
+	  
+
+			
+
+			
+	   {%endblock%}
+
+{% block scrippy %}
+
+<script type="text/javascript">
+    // form upload
+	let righthere = document.getElementById("righthere")
+    $('#myformid').submit(function(e){
+        e.preventDefault();
+		righthere.innerHTML =  "	<div class='alert alert-warning' style='color: green; font-size:14px;'>uploading...</div>";
+        $form = $(this)
+        var formData = new FormData(this);
+        $.ajax({
+            url: window.location.pathname,
+            type: 'POST',
+            data: formData,
+            success: function (response) {
+                $('.error').remove();
+                console.log(response)
+                if(response.error){
+                    // $.each(response.errors, function(name, error){
+                    //     error = '<small class="text-muted error">' + error + '</small>'
+                    //     $form.find('[name=' + name + ']').after(error);
+                    // })
+					let doc = response.errors.error
+					console.log(doc,"doc")
+					
+	righthere.innerHTML = "	<div class='alert alert-warning' style='color: red; font-size:14px;'>"+doc+"</div>";
+                
+                }
+                else{
+					if(response.message){
+						alert(response.message)
+                    window.location = "/redirect"
+                }else{
+					righthere.innerHTML = "	<div class='alert alert-warning' style='color: red; font-size:14px;'>Network error. Slow connection, try again!</div>";
+				}
+					}
+                    
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+    });
+    // end
+   </script>
+{%endblock%}

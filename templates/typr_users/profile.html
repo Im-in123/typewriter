@@ -1,0 +1,69 @@
+
+
+
+{% extends 'typr_main/dashboard/dashbase.html' %}
+{%block title%} typewriter. {% endblock %}
+
+{% block navi %}
+
+<ul>
+	<li><a href="{%url 'typr_main:dashboard'%}">Home</a></li>
+	<li><a href="{%url 'typr_main:order'%}">Order</a></li>
+    <li><a href="{%url 'typr_main:pending'%}">Pending Orders
+            {% if pending_count != 0 %}
+            <span style="color: coral;">({{pending_count}})</span>
+              {% else %}
+              
+          {% endif %}
+    </a></li>
+    <li><a href="{%url 'typr_main:in_progress'%}">In progress
+            {% if in_progress_count != 0 %}
+            <span style="color: coral;">({{in_progress_count}})</span>
+           {% else %}
+           
+       {% endif %}
+    </a></li>
+	<li><a href="{%url 'typr_main:completed'%}">Completed Orders
+            {% if completed_count != 0 %}
+			<span style="color: coral;">({{completed_count}})</span>
+			{% else %}
+			
+		{% endif %}
+    </a></li>
+    <li><a href="{%url 'typr_main:payment'%}">Payment</a></li>
+    <li class="colorlib-active"><a href="{%url 'typr_main:profile'  %}">Profile</a></li>
+	<li><a href="{%url 'typr_main:u_settings'%}">Settings</a></li>
+	<li><a href="{%url 'typr_users:logout'%}">Logout</a></li>
+</ul> <br>
+{%endblock%}
+
+{% block hi %}
+<div id="colorlib-main">
+   <div class="hero-wrap js-fullheight" style="background-image: url(images/bg_1.jpg);" data-stellar-background-ratio="0.5">
+	<div style="margin-top: 20%; margin-left:10%;"><h1 >Profile</h1>
+        <img class="rounded-circle article-img" src="{{ request.user.profile.image.url }}" style="width: 70px; height:70px">
+        <h3 class="account-heading">{{ request.user }}</h3>
+        <p class="text-secondary">{{ request.user.profile.gender }}</p>
+        <p class="text-secondary">{{ request.user.profile.phonenumber }}</p>
+        <p class="text-secondary">{{ request.user.email }}</p>
+        <div class="post_location"></div>
+    
+	
+	   <div class="js-fullheight d-flex justify-content-center align-items-center">
+		   
+		   <div class="col-md-8 text text-center">
+			
+		
+			
+		   </div>
+		   
+	   </div>
+	 
+		  
+   </div>
+   {% endblock %}
+{% block content %}
+
+  
+	{% endblock %}
+

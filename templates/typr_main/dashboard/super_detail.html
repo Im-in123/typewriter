@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typewriter.</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary"  >
+				<div class="container-fluid">
+				  <a class="navbar-brand" href="#">Typewriter.</a>
+				  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				  </button>
+				  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					  <li class="nav-item">
+						<a class="nav-link" aria-current="page" href="{%url 'typr_main:super_pending' %}">Pending</a>
+					  </li>
+					  <li class="nav-item">
+						<a class="nav-link" href="{%url 'typr_main:super_paid' %}">Paid</a>
+					  </li>
+					  <li class="nav-item">
+							<a class="nav-link" href="{%url 'typr_main:super_completed' %}">Completed</a>
+						  </li>
+						  <li class="nav-item">
+								<a class="nav-link" href="{%url 'typr_users:logout'%}">Logout</a>
+							  </li>
+					  <li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						  Dropdown
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+						  <li><a class="dropdown-item" href="#">Action</a></li>
+						  <li><a class="dropdown-item" href="#">Another action</a></li>
+						  <li><hr class="dropdown-divider"></li>
+						  <li><a class="dropdown-item" href="#">Something else here</a></li>
+						</ul>
+					  </li>
+					  <li class="nav-item">
+						<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+					  </li>
+					</ul>
+					<form class="d-flex">
+					  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+					  <button class="btn btn-outline-success" type="submit">Search</button>
+					</form>
+				  </div>
+				</div>
+			  </nav>
+
+       
+       
+       
+       
+      
+          
+            {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+             {% endif %}
+   <div class="container">
+                <br>
+                <br>
+           
+  
+<ul class="list-group">
+  <li class="list-group-item active"><h1>Detail</h1></li>
+  <li class="list-group-item"><h5> User: {{collection.client}}</h5></li>
+  <li class="list-group-item"><h5> User phonenumber: {{collection.phonenumber}}</h5></li>
+  <li class="list-group-item"><h5> Collection name: {{collection.collname}}</h5></li>
+  <li class="list-group-item"><h5>Estimated amount: GHc {{collection.estimated_amount}}</h5></li>
+</ul>
+<br>
+<br>
+<h4>Estimated amount: GHc {{collection.estimated_amount}}</h4>
+
+        <form method="POST">
+            {% csrf_token %}
+           Set estimated amount: GHc {{form.estimated_amount}}
+            <input type="hidden" name="code" value="{{collection.id}}" required>
+            <input type="submit" value="Save">
+        </form>
+        <br>
+        <br>
+        <h4>Deposited amount: GHc {{collection.deposited_amount}}</h4>
+        <form method="POST">
+            {% csrf_token %}
+           Set deposited amount: GHc {{form5.deposit}}
+            <input type="hidden" name="code" value="{{collection.id}}" required>
+            <input type="submit" value="Save">
+        </form>
+        <br>
+        <h4>Paid: 
+            {% if collection.paid_option == True %}
+            Yes
+            {% else %}
+            No
+            {% endif %}
+            
+            </h4>
+       
+       
+        <form method="POST">
+            {% csrf_token %}
+          Is folder paid: {{form2.paid_option}}
+            <input type="hidden" name="code" value="{{collection.id}}" required>
+            <input type="submit" value="Save">
+        </form>
+        <br>
+        <hr>
+        <h4>Proof of Payment</h4>
+        <div class="row row-cols-1 row-cols-md-3">
+
+          {% if  collection.proof_imgs %}
+        
+            {% for img in collection.proof_imgs %}
+            <div class="col mb-4">
+              <div class="card">
+                <img src="{{img.imageby.url}}" class="card-img-top" alt="{{img.name}}" style="width: 50%; height:200px;">
+                <div class="card-body">
+                  <p class="card-title">{{img.image.name| linebreaksbr | truncatechars:27 }}</p>
+                  <p class="card-text"><small class="text-muted"> Uploaded on  {{img.timestamp}}</small></p>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+
+            {% else %}
+            <div class="col mb-4">
+                <p>Nothing yet</p>
+            </div>
+            
+            {% endif %} 
+
+            
+          <!-- {% if  collection.proof_imgsnnnnn %}
+        
+            {% for img in collection.proof_imgs %}
+            <div class="col mb-4">
+              <div class="card">
+                <img src="data:image/jpeg;base64, {{img.imageby}}" class="card-img-top" alt="{{img.name}}" style="width: 50%; height:200px;">
+                <div class="card-body">
+                  <p class="card-title">{{img.image.name| linebreaksbr | truncatechars:27 }}</p>
+                  <p class="card-text"><small class="text-muted"> Uploaded on  {{img.timestamp}}</small></p>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+
+            {% else %}
+            <div class="col mb-4">
+                <p>Nothing yet</p>
+            </div>
+            
+            {% endif %} -->
+
+            </div>
+        <br>
+<hr>
+<h4>Typing images</h4>
+        <div class="row row-cols-1 row-cols-md-3">
+         
+          {% for img in second_fast %}
+          <div class="col mb-4">
+            <div class="card">
+              <img   src="{{img.imageby.url}}" class="card-img-top" alt="{{img.name}}" style="width: 50%; height:200px;">
+              <div class="card-body">
+                <p class="card-title">{{img.name| linebreaksbr | truncatechars:27 }}</p>
+                <p class="card-text"><small class="text-muted"> Typed: {{img.typed}}</small></p>
+                <form method="POST">
+                  {% csrf_token %}
+                Typed?: {{form3.typed}}
+                  <input type="hidden" name="code" value="{{img.code}}" required>
+                  <input type="hidden" name="codedd" value="{{collection.id}}" required>
+                  <input type="submit" value="Save">
+              </form>
+              </div>
+            </div>
+          </div>
+         
+        
+        {% endfor %}
+      </div>
+ 
+  
+      <hr> <hr>
+      <h4>Is Typing finished: {{collection.colldone}}</h4>
+      <form method="POST" class="">
+        {% csrf_token %}
+      Set to yes if you have finished typing everything or otherwise
+        {{form4.done }}
+        <input type="hidden" name="code" value="{{collection.id}}" required>
+        <input type="submit" value="Save">
+    </form>
+    
+    <hr>
+    <br>
+    <br>
+    <h3>Upload document</h3>
+    <br>
+    <form class="form-inline" method="POST" action="" enctype="multipart/form-data">
+      {% csrf_token %}
+      Upload finished document:<input type="file" name="docs" multiple required>
+      
+     <input type="hidden" name="thiscode" value="{{collection.id}}" required>
+     
+      <button type="submit" class="btn btn-primary mb-2">Upload/Save</button>
+      </form>
+      <p>{% for a in collection.completed%}
+     
+       
+      </p>{{a.name}}  &nbsp; <a href="{% url 'typr_main:super_delete_file' a.id %}"> remove file </a> </p>
+        {% endfor %}
+
+      
+    <hr>
+    <hr>
+    <hr>
+    <br><br>
+   <div>
+ <h3>Delete Order Folder!!!</h3>
+        <h5 style="color: red;">Entire collection will be lost</h5>
+        <a  id="yo" href="{% url 'typr_main:super_delete' collection.id %}" onclick="return confirm('Are you sure?')"> Delete </a>
+        <br>
+        
+      
+    </div>
+    <br><br>
+
+
+   </div>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+  
+   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+

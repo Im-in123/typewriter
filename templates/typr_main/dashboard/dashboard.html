@@ -1,0 +1,100 @@
+{% extends 'typr_main/dashboard/dashbase.html' %}
+{%block title%} typewriter. {% endblock %}
+{% load static %}
+
+{% block navi %}
+<ul>
+	<li  class="colorlib-active"><a href="{%url 'typr_main:dashboard'%}">Home</a></li>
+	<li><a href="{%url 'typr_main:order'%}">Order</a></li>
+	<li><a href="{%url 'typr_main:pending'%}">
+		Pending Orders
+		{% if pending_count != 0 %}
+	  <span style="color: coral;">({{pending_count}})</span>
+		{% else %}
+		
+	{% endif %}
+	</a></li>
+	<li><a href="{%url 'typr_main:in_progress'%}">In progress
+			{% if in_progress_count != 0 %}
+			 <span style="color: coral;">({{in_progress_count}})</span>
+			{% else %}
+			
+		{% endif %}
+	</a></li>
+	<li><a href="{%url 'typr_main:completed'%}">Completed Orders
+			{% if completed_count != 0 %}
+			<span style="color: coral;">({{completed_count}})</span>
+			{% else %}
+			
+		{% endif %}
+	</a></li>
+	<li><a href="{%url 'typr_main:payment'%}">Payment</a></li>
+	<li><a href="{%url 'typr_main:profile'%}">Profile</a></li>
+	<li><a href="{%url 'typr_main:u_settings'%}">Settings</a></li>
+	<li><a href="{%url 'typr_users:logout'%}">Logout</a></li>
+	</ul>
+	<br>
+
+	{% endblock %}
+
+	{% block hi %}
+
+	   <div class="hero-wrap js-fullheight" style="background-image: url({% static 'images/10.jpg'%});" data-stellar-background-ratio="0.5">
+		  
+		   <div class="js-fullheight d-flex justify-content-center align-items-center">
+			   <div class="col-md-8 text text-center">
+				
+				   <div class="desc" >
+					   <center>
+						   <h2 class="subheading" style="color:gray;  background:white; border-radius:20px; width:40%; opacity:1; font-family:Georgia, 'Times New Roman', Times, serif;"  >Hi!
+						   <br>
+						   {{request.user}}
+					   </h2>
+					   </center>
+					  
+					   
+					   <h4 class="mb-4"></h1>
+					<h4 style="color:white;">Notifications</h4>
+					   <p class="">
+						 {% for n in noti %}
+						 <p style="color:black;  border-radius:20px; background:white;opacity:0.8;">  {{ n.message }} {{ n.timestamp }}<a href="{% url 'typr_main:notification' n.id %}" style="color: orangered;"> &nbsp; Clear </a></p>
+						 {% endfor %}
+						 <br>
+					  
+						 <p><a  style="color: white; text-decoration:underline" href="{% url 'typr_main:order'%}" > Go to order page </a></p>
+				   </div>
+
+			   </div>
+		   </div>
+	   </div>
+	   {% endblock %}
+
+	   {% block me %}
+	   <h1>Orders Summary</h1>
+	   <div>
+<hr>
+		<br>
+		   {% for i in summary.all %}
+			
+		   
+		   
+		   <div class="list-group">
+			 
+				 <div class="d-flex w-100 justify-content-between">
+				   <h5 class="mb-1">{{i.collname}}</h5>
+				   <small>{{i.created_date | timesince}} ago</small>
+				 </div>
+				 <p class="mb-1"></p>
+				 <small>Status: {{i.job_status}}</small>
+			   </a>
+		   
+			 </div>
+			 <hr>
+	   
+		   
+		   {% endfor%}
+	   
+	   
+	   </div>
+	   {%endblock%}
+

@@ -1,0 +1,65 @@
+{% extends 'typr_main/dashboard/dashbase.html' %}
+{%block title%} typewriter.{% endblock %}
+{% load static %}
+{% block navi %}
+
+<ul>
+	<li><a href="{%url 'typr_main:dashboard'%}">Home</a></li>
+	<li><a href="{%url 'typr_main:order'%}">Order</a></li>
+    <li><a href="{%url 'typr_main:pending'%}">Pending Orders
+			{% if pending_count != 0 %}
+			<span style="color: coral;">({{pending_count}})</span>
+			  {% else %}
+			  
+		  {% endif %}
+	</a></li>
+    <li class="colorlib-active"><a href="{%url 'typr_main:in_progress'%}">In progress
+			{% if in_progress_count != 0 %}
+			<span style="color: coral;">({{in_progress_count}})</span>
+		   {% else %}
+		   
+	   {% endif %}
+	</a></li>
+	<li><a href="{%url 'typr_main:completed'%}">Completed Orders
+			{% if completed_count != 0 %}
+			<span style="color: coral;">({{completed_count}})</span>
+			{% else %}
+			
+		{% endif %}
+	</a></li>
+    <li><a href="{%url 'typr_main:payment'%}">Payment</a></li>
+    <li><a href="{%url 'typr_main:profile' %}">Profile</a></li>
+	<li><a href="{%url 'typr_main:u_settings'%}">Settings</a></li>
+	<li><a href="{%url 'typr_users:logout'%}">Logout</a></li>
+</ul><br>
+{%endblock%}
+
+	
+
+	   {% block me %}
+	    
+	<h4>Orders in Progress</h4>
+	<br>
+	<br>
+          	 
+{% for i in collection.all %}
+	
+	
+<div class="list-group">
+	<a href="{% url 'typr_main:typr_detail' i.id %}" class="list-group-item list-group-item-action primary">
+	  <div class="d-flex w-100 justify-content-between">
+		<h5 class="mb-1"  style="font-size:17px;">{{i.collname}}</h5>
+		<small>{{i.created_date | timesince}} ago</small>
+	  </div>
+	  <p class="mb-1"></p>
+	  <small>Order status: {{i.job_status}}</small>
+	 
+	</a>
+
+  </div>
+
+
+{% endfor%}
+
+	   {%endblock%}
+

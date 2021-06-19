@@ -1,0 +1,422 @@
+
+{% extends 'typr_main/base.html' %}
+{% load static %}
+{%block title%} typewriter. {% endblock %}
+
+{% block content %}
+
+<body data-spy="scroll" data-target=".mainmenu-area">
+    <!-- Preloader-content -->
+    <div class="preloader">
+        <span>     <a href=""></a></span>
+    </div>
+    <!-- MainMenu-Area -->
+    <nav class="mainmenu-area" data-spy="affix" data-offset-top="200">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#primary_menu">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href=""><img src="{% static 'images/t.png'%}" alt=" Typewriter." ></a>
+               
+            </div>
+            <div class="collapse navbar-collapse" id="primary_menu">
+                <ul class="nav navbar-nav mainmenu">
+                    <li class="active"><a href="#home_page">Home</a></li>
+                    <li><a href="#about_page">About</a></li>
+                    <li><a href="#price_page">Pricing</a></li>
+                    <li><a href="#questions_page">FAQ</a></li>
+                    <li><a href="#contact_page">Contacts</a></li>
+                    <div class="hidden-lg">
+                      <li><a href="{%url 'typr_users:signup' %}">Sign Up</a></li>  
+                <li>    <a href="{%url 'typr_users:login' %}">Log In</a></li>
+                    </div>
+                    
+                </ul>
+                <div class="right-button hidden-xs">
+               <a href="{%url 'typr_users:signup' %}">Sign Up</a>
+                    <a href="{%url 'typr_users:login' %}">Log In</a>
+                </div>
+              
+            </div>
+        </div>
+    </nav>
+    <!-- MainMenu-Area-End    <div class="right-button hidden-xs"></div>-->
+    <!-- Home-Area -->
+    <header class="home-area overlay" id="home_page">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 hidden-xs col-md-5">
+                    <figure class="mobile-image wow fadeInUp" data-wow-delay="0.2s">
+                        <img src="{% static 'images/header-mobile.png' %}" alt="">
+                    </figure>
+                </div>
+              
+                <div class="col-xs-12 col-md-7">
+                    <div class="space-80 hidden-xs"></div>
+                    <h1 class="wow fadeInUp" data-wow-delay="0.4s">Type your amazing stuff with Typewriter.</h1>
+                    <div class="space-20"></div>
+                    <div class="desc wow fadeInUp" data-wow-delay="0.6s">
+                       
+                        <aside class="col-xs-12 col-md-5 hidden-lg ">
+              
+                            <img src="{% static 'images/header-mobile.png' %}" alt="" style="height: 200px; width:200px; float:left">
+                        </aside>
+
+                        <p style="font-size: 17px;"> <b>Hi there!  </b>Get get your documents typed and delivered on your phone with no hustle right here on Typewriter. <br>
+
+                        Our services accept the the use of Mobile Money, for easy payment </p>
+                        
+                    </div>
+                    <div class="space-20"></div>
+                    <a href="{% url 'typr_users:login'%}" class="bttn-white wow fadeInUp" data-wow-delay="0.8s"><i class="lnr lnr-link"></i>Login to start</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Home-Area-End -->
+    <!-- About-Area -->
+    <section class="section-padding" id="about_page">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-10 col-md-offset-1">
+                    <div class="page-title text-center">
+                     
+                        
+                        <div class="space-20"></div>
+                        <h5 class="title">About Typewriter.</h5>
+                        <div class="space-30"></div>
+                        <h3 class="blue-color">A beautiful typing site for busy bees. Assignments, Letters, Project work, bulk school exams typing and easy delivery right on your phone. </h3>
+                        <div class="space-20"></div>
+                        <p>We take pictures, scans or screenshots,  convert them into a typed document and deliver them to you in Popular Microsoft Word format right on your phone</p>
+                        <p>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- About-Area-End -->
+    <!-- Progress-Area -->
+    <section class="progress-area gray-bg" id="progress_page">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <div class="page-title section-padding">
+                        <h5 class="title wow fadeInUp" data-wow-delay="0.2s">Our Progress</h5>
+                        <div class="space-10"></div>
+                        <h3 class="dark-color wow fadeInUp" data-wow-delay="0.4s">Great Web Service</h3>
+                        <div class="space-20"></div>
+                        <div class="desc wow fadeInUp" data-wow-delay="0.6s">
+                            <p>Hear from our amazing clients from all over the country. </p>
+                        </div>
+                        <div class="space-50"></div>
+                        <a href="{% url 'typr_users:signup'%}" class="bttn-default wow fadeInUp" data-wow-delay="0.8s">Join Us</a>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <figure class="mobile-image">
+                        <img src="{% static 'images/progress-phone.png'%}" alt="">
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Progress-Area-End -->
+   
+    
+    <!-- Feature-Area-End -->
+    <!-- Testimonial-Area -->
+    <section class="testimonial-area" id="testimonial_page">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="page-title text-center">
+                        <h5 class="title">Testimonials</h5>
+                        <h3 class="dark-color">Our Client Loves US</h3>
+                        <div class="space-60"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="team-slide">
+                        <div class="team-box">
+                            <div class="team-image">
+                                <img src="{% static 'images/team-1.png' %}" alt="">
+                            </div>
+                            <h4>Johnson</h4>
+                            <h6 class="position"></h6>
+                            <p>Typewriter provides a powerful solution that everyone must have. And if you get stuck their team will help out.Lost a soft copy of my book, I am using typewriter to rewrite my entire book, and in two hours Im done with many chapters.</p>
+                        </div>
+                        <div class="team-box">
+                            <div class="team-image">
+                                <img src="{% static 'images/team-m1.jpg' %}" alt="" >
+                            </div>
+                            <h4>Elena</h4>
+                            <h6 class="position"></h6>
+                            <p>It has changed the way I handle my university assigments. I can't imagine not working with typewriter.</p>
+                        </div>
+                        <div class="team-box">
+                            <div class="team-image">
+                                <img src="{% static 'images/team-m2.jpg' %}" alt="">
+                            </div>
+                            <h4>Eric</h4>
+                            <h6 class="position"></h6>
+                            <p>Its not just a pretty site, i am also thrilled by the quality of support. It is fast reliable and has no complications at all. The is definitely a five star service!</p>
+                        </div>
+                      
+                        <div class="team-box">
+                            <div class="team-image">
+                                <img src="{% static 'images/team-m3.jpg' %}" alt="">
+                            </div>
+                            <h4>Janet</h4>
+                            <h6 class="position"></h6>
+                            <p>Love your stuff, i stumbled accros typewriter a few weeks ago. the quality has been admirable. I tell everyone I know what they have to try.</p>
+                        </div>
+                    
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Testimonial-Area-End -->
+    <!-- Gallery-Area -->
+    <section class="gallery-area section-padding" id="gallery_page">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 gallery-slider">
+                    <div class="gallery-slide">
+                        <div class="item"><img src="{% static 'images/gallery-1.jpg' %}" alt=""></div>
+                        <div class="item"><img src="{% static 'images/gallery-2.jpg' %}" alt=""></div>
+                        <div class="item"><img src="{% static 'images/gallery-3.jpg' %}" alt=""></div>
+                        <div class="item"><img src="{% static 'images/gallery-4.jpg' %}" alt=""></div>
+                        <div class="item"><img src="{% static 'images/gallery-1.jpg' %}" alt=""></div>
+                        <div class="item"><img src="{% static 'images/gallery-2.jpg' %}" alt=""></div>
+                        <div class="item"><img src="{% static 'images/gallery-3.jpg' %}" alt=""></div>
+                        <div class="item"><img src="{% static 'images/gallery-1.jpg '%}" alt=""></div>
+                        <div class="item"><img src="{% static 'images/gallery-2.jpg' %}" alt=""></div>
+                        <div class="item"><img src="{% static 'images/gallery-3.jpg' %}" alt=""></div>
+                        <div class="item"><img src="{% static 'images/gallery-4.jpg' %}" alt=""></div>
+                        <div class="item"><img src="{% static 'images/gallery-1.jpg' %}" alt=""></div>
+                        <div class="item"><img src="{% static 'images/gallery-2.jpg' %}" alt=""></div>
+                        <div class="item"><img src="{% static 'images/gallery-3.jpg' %}" alt=""></div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-5 col-lg-3">
+                    <div class="page-title">
+                        <h5 class="white-color title wow fadeInUp" data-wow-delay="0.2s">We take your</h5>
+                        <div class="space-10"></div>
+                        <h3 class="white-color wow fadeInUp" data-wow-delay="0.4s">Screenshots - Pictures - Scans</h3>
+                    </div>
+                    <div class="space-20"></div>
+                    <div class="desc wow fadeInUp" data-wow-delay="0.6s">
+                        <p>Just send us your clear screenshots, pictures, or scanned documents and let us do all the work.</p>
+                    </div>
+                    <div class="space-50"></div>
+                    <a href="{% url 'typr_users:login'%}" class="bttn-default wow fadeInUp" data-wow-delay="0.8s">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Gallery-Area-End -->
+    <!-- How-To-Use -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="page-title">
+                       
+                        <h3 class="dark-color wow fadeInUp" data-wow-delay="0.4s">Contact us on  0550742960 for project work assistance</h3>
+                        <h3 class="dark-color wow fadeInUp" data-wow-delay="0.4s">Schools can also contact this number for bulk typing</h3>
+                    </div>
+                    
+                </div>
+              
+            </div>
+        </div>
+    </section>
+    <!-- How-To-Use-End -->
+  
+    <!--Price-Area -->
+    <section class="section-padding price-area" id="price_page">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="page-title text-center">
+                        <h5 class="title">Pricing Plan</h5>
+                        <h3 class="dark-color">Our Awesome Pricing Plan</h3>
+                        <div class="space-60"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+              
+                <div class="col-xs-12 col-sm-4">
+                    <div class="price-box" >
+                        <div class="price-header">
+                            <div class="price-icon">
+                                <span class="lnr lnr-pie-chart"></span>
+                            </div>
+                            <h4 class="upper">Mobile Money
+                            </h4>
+                        </div>
+                        <div class="price-body">
+                            <ul>
+                                <li> 2.0 typing space standard</li>
+                                <li> 1 page</li>
+                            </ul>
+                        </div>
+                        <div class="price-rate">
+                            <sup>GHc</sup> <span class="rate">1.00</span> <small>.</small>
+                        </div>
+                        <div class="price-footer">
+                            <a href="#" class="bttn-white"></a>
+                        </div>
+                    </div>
+                    <div class="space-30 hidden visible-xs"></div>
+                </div>
+
+                <div class="col-xs-12 col-sm-4">
+                    <div class="price-box" >
+                        <div class="price-header">
+                            <div class="price-icon">
+                                <span class="lnr lnr-pie-chart"></span>
+                            </div>
+                            <h4 class="upper">
+                                    Mobile Money
+                            </h4>
+                        </div>
+                        <div class="price-body">
+                            <ul>
+                                    <li> Maths typing</li>
+                                <li> 2.0 typing space standard</li>
+                                <li> 1 page</li>
+                            </ul>
+                        </div>
+                        <div class="price-rate">
+                                <sup>GHc</sup> <span class="rate">1.50</span> <small>.</small>
+                            </div>
+                        
+                        <div class="price-footer">
+                            <a href="#" class="bttn-white"></a>
+                        </div>
+                    </div>
+                    <div class="space-30 hidden visible-xs"></div>
+                </div>
+
+                <div class="col-xs-12 col-sm-4">
+                    <div class="price-box" >
+                        <div class="price-header">
+                            <div class="price-icon">
+                                <span class="lnr lnr-pie-chart"></span>
+                            </div>
+                            <h4 class="upper">
+                            </h4>
+                        </div>
+                        <div class="price-body">
+                            <ul>
+                                    <li> For Project works typing, schools typing, project work assistance, bulk typing, you can contact us on WhatsApp (0550742960) for better prices!</li>
+                              
+                            </ul>
+                        </div>
+                      
+                    </div>
+                    <div class="space-30 hidden visible-xs"></div>
+                </div>
+              
+            </div>
+        </div>
+    </section>
+    <!--Price-Area-End -->
+    <!--Questions-Area -->
+    <section id="questions_page" class="questions-area section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="page-title text-center">
+                        <h5 class="title">FAQ</h5>
+                        <h3 class="dark-color">Frequently Asked Questions</h3>
+                        <div class="space-60"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="toggole-boxs">
+                        <h3>How do I upload my images to be typed? </h3>
+                        <div>
+                            <p>First Log into your Typewriter account and go to the order page. ulpoad your images and provide any name in the folder name field. Then click on upload.</p>
+                        </div>
+                        <h3>How do i pay for my order? </h3>
+                        <div>
+                            <p>You can pay for orders by first logging into your account. Go to the payment page. And follow the instructions there after. Payment is mainly through Mobile Money</p>
+                        </div>
+                        <h3>How long does it take for my order to be typed? </h3>
+                        <div>
+                            <p> We have very fast typists here at typewriter. It usually takes not more than two hours to complete your typing, depending on your workload.</p>
+                        </div>
+                        <h3>How do I get my finished order? </h3>
+                        <div>
+                            <p>Your finished documents will be waiting in your completed page for download.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <div class="space-20 hidden visible-xs"></div>
+                    <div class="toggole-boxs">
+                        <h3>How can I contact you? </h3>
+                        <div>
+                            <p>Go to the contact page for info in case of special request, compliants or enquiries</p>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Questions-Area-End -->
+    <!-- Subscribe-Form -->
+    <div class="subscribe-area section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+                    <div class="subscribe-form text-center">
+                        <h3 class="blue-color">Subscribe for More Features</h3>
+                        <div class="space-20"></div>
+                        <form id="mc-form">
+                            <input type="email" class="control" placeholder="Enter your email" required="required" id="mc-email">
+                            <button class="bttn-white active" type="submit"><span class="lnr lnr-location"></span> Subscribe</button>
+                            <label class="mt10" for="mc-email"></label>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+            <div class="card text-center">
+                    <div class="card-header">
+              
+                    </div>
+                    <div class="card-body">
+                        <br>
+                        <p>  <a href="#" class="btn btn-primary">Meet Eben</a></p>
+                       
+                      
+                        <br>
+                            <img src="{% static 'images/eben.jpg' %}" class="card-img-top" alt="..." style="width: 30%; height:30%;">
+                      <h5 class="card-title"></h5>
+                      <h5 class="card-title">Co-founder</h5>
+                
+                    </div>
+                    <div class="card-footer text-muted">
+                   
+                    </div>
+                  </div>
+
+    </div>
+{% endblock %}
+

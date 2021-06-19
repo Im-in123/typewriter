@@ -1,0 +1,81 @@
+{% extends 'typr_main/dashboard/dashbase.html' %}
+{%block title%} typewriter. {% endblock %}
+
+
+
+{% block navi %}
+<ul>
+	<li ><a href="{%url 'typr_main:dashboard'%}">Home</a></li>
+	<li><a href="{%url 'typr_main:order'%}">Order</a></li>
+	<li><a href="{%url 'typr_main:pending'%}">Pending Orders
+			{% if pending_count != 0 %}
+			<span style="color: coral;">({{pending_count}})</span>
+			  {% else %}
+			  
+		  {% endif %}
+	</a></li>
+	<li><a href="{%url 'typr_main:in_progress'%}">In progress
+			{% if in_progress_count != 0 %}
+			 <span style="color: coral;">({{in_progress_count}})</span>
+			{% else %}
+		
+		{% endif %}
+	</a></li>
+	<li><a href="{%url 'typr_main:completed'%}">Completed Orders
+			{% if completed_count != 0 %}
+			<span style="color: coral;">({{completed_count}})</span>
+			{% else %}
+			
+		{% endif %}
+	</a></li>
+	<li><a href="{%url 'typr_main:payment'%}">Payment</a></li>
+	<li><a href="{%url 'typr_main:profile' %}">Profile</a></li>
+	<li class="colorlib-active" ><a href="{%url 'typr_main:u_settings'%}">Settings</a></li>
+	<li><a href="{%url 'typr_users:logout'%}">Logout</a></li>
+</ul>
+<br>
+{% endblock %}
+
+
+
+{% block me %}
+<h3>Update</h3>
+				   <div class="desc">
+					
+						   
+						<br>
+						{% if messages %}
+		 {% for message in messages %}
+			 <div class="alert alert-{{ message.tags }}">
+				 {{ message }}
+			 </div>
+		 {% endfor %}
+		{% endif %}
+		
+			 <br>
+			 <br>		   
+	 <form method="POST">
+		 {% csrf_token %}
+	 {{request.user.email}}	 {{form1 }}
+		 <input type="submit" value="change" style="color:#f05d23; background-color:white">
+	 </form> <br>
+	 <form method="POST">
+		 {% csrf_token %}
+		 +233 {{request.user.profile.phonenumber}}  {{form2 }}
+		 <input type="submit" value="change" style="color:#f05d23; background-color:white">
+	 </form>
+	 
+	 <br>
+	 <form method="POST">
+		 {% csrf_token %}
+	 {{request.user.profile.gender}}	Gender
+	 <input type="text" placeholder="gender" name="gender"required> 
+	 
+		 <input type="submit" value="change" style="color:#f05d23; background-color:white">
+	 </form>
+	 <br>
+	 <a href="#" style="text-decoration: underline;">Click here to change password</a>
+				   </div>
+
+	{% endblock %}
+	
