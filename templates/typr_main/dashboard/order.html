@@ -124,7 +124,7 @@
             data: formData,
 			error: function(jqXHR, textStatus){
 				console.log(jqXHR.statusText)
-				//alert(jqXHR.statusText)
+				alert(jqXHR.statusText)
 			
 				if(textStatus === 'timeout'){
 					righthere.innerHTML = "	<div class='alert alert-warning' style='background:white; color: green; font-size:14px;'>Connection unstable, retrying upload please wait... <img style='width:60px; height:52px;' src='{% static 'images/loader.gif'%}'/></div>";
