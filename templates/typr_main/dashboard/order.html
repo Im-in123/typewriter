@@ -124,18 +124,11 @@
             data: formData,
 			error: function(jqXHR, textStatus){
 				console.log(jqXHR.statusText)
-				alert(jqXHR.statusText)
+				//alert(jqXHR.statusText)
 			
-				if(textStatus === 'timeout'){
-					righthere.innerHTML = "	<div class='alert alert-warning' style='background:white; color: green; font-size:14px;'>Connection unstable, retrying upload please wait... <img style='width:60px; height:52px;' src='{% static 'images/loader.gif'%}'/></div>";
-						for (let i =1; i < 10000; i++){
-					setTimeout(() => {
-						var g = 1
-						g = g+i
-					}, 90000 * i);
-				}
-				alert("Slow network, try again!")
-				righthere.innerHTML = "	<div class='alert alert-warning' style='background:white; color: green; font-size:14px;'>Slow network try again! </div>";
+				
+				alert("Slow network!")
+				righthere.innerHTML = "	<div class='alert alert-warning' style='background:white; color: green; font-size:14px;'>Slow network, try again! </div>";
 				onthis.innerHTML= "Upload"
 				onthis.disabled = false
 					//let testback = document.getElementById("addon-wrapping").value
@@ -196,7 +189,7 @@
 					}
                     
             },
-			timeout: 80000,
+			timeout: 30000,
             cache: false,
             contentType: false,
             processData: false
