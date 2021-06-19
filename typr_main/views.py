@@ -18,9 +18,9 @@ from django.contrib.auth.models import User
 
 import os
 import base64
-import io
-from django.core.files.images import ImageFile
 
+
+from io import StringIO
  
 from django.urls import reverse 
 # Create your views here.
@@ -172,7 +172,7 @@ class order(View):
         return redirect("typr_users:login")
 
     def post(self,*args, **kwargs):
-        from django.shortcuts import render
+     
         from django.http import JsonResponse
         
         if self.request.method =="POST":
@@ -186,8 +186,7 @@ class order(View):
                 except:
                     cqs ="None"
                 if len(cqs) > 0 :
-                    print("already have a pending")
-                    return JsonResponse({'error': True, 'errors': {'name':'this','error':'You already have an unpaid order folder, make payment or delete it from pending orders to make another one!!!'}})
+                    return JsonResponse({'error': True, 'errors': {'name':'this','error':'You already uploaded a folder, make payment for it at payment page or delete it from pending orders to create another one!!!'}})
 
                 try:
                     q1 = Collection.objects.get(collname = collname, client =self.request.user)
@@ -200,17 +199,17 @@ class order(View):
                     qs = get_object_or_404(User, username = self.request.user).profile
                     qsn = qs.phonenumber
                     album = Collection.objects.create(collname= collname, client = self.request.user, phonenumber=qsn)
-                    from io import StringIO
+                 
                     for i in images:
                        
-                        print(i.content_type)
+                        #print(i.content_type)
                         b =os.path.splitext(i.name)
-                        print(b)
+                        #print(b)
                         print("imageeeeeeeeeeeee")
                         name= i.name
                         ext= b[1]
 
-                       
+                        
                         #i= base64.b64encode(i.read())
 
                         # image = ImageFile(io.BytesIO(i), name='foo.jpg')
@@ -633,6 +632,7 @@ class typrDetailView(DetailView):
 
             try:
                 second_fast =ImgConvert.objects.all().filter(user = self.request.user, collection_name = collection).order_by("id")
+                second_fast_len = len(second_fast)
             except:
                 pass
             payment_count = 0
@@ -663,7 +663,8 @@ class typrDetailView(DetailView):
                     'in_progress_count': in_progress_count,
                     'completed_count':completed_count,
                     'payment_count':payment_count,
-                    'second_fast':second_fast
+                    'second_fast':second_fast,
+                    'len':second_fast_len
                 
                 
                 }
