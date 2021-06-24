@@ -28,7 +28,7 @@ DEBUG = True
 
 #TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS =["typewriteronline.herokuapp.com"] #['typewriter.herokuapp.com']
+ALLOWED_HOSTS =["*"]#["typewriteronline.herokuapp.com"] #['typewriter.herokuapp.com']
 
 
 # Application definition
@@ -126,8 +126,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True #
+#SECURE_SSL_REDIRECT = True
 CSRF_COOKIE_SECURE = True
 SECURE_REFERRER_POLICY = "no-referrer-when-downgrade"
 SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -161,3 +160,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER =  os.environ.get('email')
 EMAIL_HOST_PASSWORD = os.environ.get('password')
 
+
+FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0o755
+FILE_UPLOAD_PERMISSIONS = 0o644

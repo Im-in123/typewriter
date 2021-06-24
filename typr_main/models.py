@@ -98,7 +98,9 @@ class Collection(models.Model):
     deposited_amount =  models.FloatField(null=True, default=0, blank=True)
     paid_option =  models.BooleanField(null=True, default=False, blank=True)
     collection_proof = models.ForeignKey(Images, on_delete=models.SET_NULL, blank=True, null=True)
-
+    uploading = models.BooleanField(null = True, default=True)
+    
+    
    
     def __str__(self):
         return f'Collection obj: name:{self.collname}, user = {self.client.username},  done : {self.colldone}, :id: {self.id}'

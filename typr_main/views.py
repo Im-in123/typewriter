@@ -81,7 +81,7 @@ def dashboard(request, *args, **kwargs):
                 print(e, '''''''''''''''''''''''''')
 
         
-        summary = Collection.objects.all().filter(client= request.user).order_by("id")
+        summary = Collection.objects.all().filter(client= request.user, uploading= False).order_by("id")
         payment_count = 0
         order_count = 0
         in_progress_count = 0
@@ -131,10 +131,22 @@ def deletecoll2(request, id, *args, **kwargs):
         coll = Collection.objects.get(id = id)
         coll.delete()
         return redirect("typr_main:completed")
-
+        
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+#from braces.views import CsrfExemptMixin
+@method_decorator(csrf_exempt, name='dispatch')
 class order(View):
     def get(self, *args, **kwargs):
         if self.request.user.is_authenticated:
+        	
+            try:
+            	todel = Collection.objects.all().filter(client = self.request.user, uploading = True)
+            	for a in todel:
+                    a.delete()
+            except:
+            	pass
+        	
             try:
                 cnotifica = CustomNotification.objects.all().filter(user = self.request.user, viewed= False)
              
@@ -179,53 +191,107 @@ class order(View):
             try:
                 collname = self.request.POST['collection']
                 images = self.request.FILES.getlist('images')
+                try:
+                    upload_done = self.request.POST['upload_done']
+                    print(upload_done)
+                except Exception as e:
+                	print(e,"3eeeeeeee")
                 print(collname)
                 print(images)
+               
                 try:
-                    cqs   = Collection.objects.all().filter(client = self.request.user, job_status='Pending',  colldone="False")
+                	qs = Collection.objects.get(collname = collname, client= self.request.user, uploading=False)
+                except Exception as e:
+                	qs = None
+                	print(e)
+                	print(qs)
+                if qs != None:
+                	print("name clash")
+                	return JsonResponse({'error': True, 'errors': {'name':'this','error':'Error , A folder with this name already exist, use a different name!'}})
+                else:
+                	print("passing")
+                try:
+                	qs1 = Collection.objects.all().filter( client = self.request.user, job_status='Pending',  uploading = False)
                 except:
-                    cqs ="None"
-                if len(cqs) > 0 :
-                    return JsonResponse({'error': True, 'errors': {'name':'this','error':'You already uploaded a folder, make payment for it at payment page or delete it from pending orders to create another one!!!'}})
-
-                try:
-                    q1 = Collection.objects.get(collname = collname, client =self.request.user)
-                    q1 = True
+                	qs1 = None
+                	print(e)
+                	print(qs1)
+                	
+                if len(qs1) > 0 :
+                	print("already uploaded")
+                	return JsonResponse({'error': True, 'errors': {'name':'this','error':'You already uploaded a folder, make payment for it at payment page or delete it from pending orders to create another one!!!'}})
                     
-                except:
-                    q1 = False
+                else:
+                	pass
+                if upload_done == "True":
+                	try:
+                	    qs2= Collection.objects.get(collname= collname, client= self.request.user, job_status = "Pending", uploading= True)
+                	except:
+                		qs2 = None
+                		print("1")
+                	if qs2:
+                	    qs2.uploading = False
+                	    qs2.save()
+                	    print("complete")
+                	    return JsonResponse({'error': False, 'message': 'Uploaded set complete.'})
                 
-                if q1 == False:
-                    qs = get_object_or_404(User, username = self.request.user).profile
-                    qsn = qs.phonenumber
-                    album = Collection.objects.create(collname= collname, client = self.request.user, phonenumber=qsn)
-                 
-                    for i in images:
+                if upload_done == "False":
+                    try: 
+                        qs2 = Collection.objects.get(collname= collname, client= self.request.user, job_status = "Pending", uploading = True)
+                    except:
+                    	qs2 = None
+                    	print("2")
+                    	
+                    if qs2 != None:
+                    
+                        for i in images:
+                        	
                        
                         #print(i.content_type)
-                        b =os.path.splitext(i.name)
+                            b =os.path.splitext(i.name)
                         #print(b)
-                        print("imageeeeeeeeeeeee")
-                        name= i.name
-                        ext= b[1]
+                            print("imageeeeeeeeeeeee")
+                            name= i.name
+                            ext= b[1]
 
                         
                         #i= base64.b64encode(i.read())
 
                         # image = ImageFile(io.BytesIO(i), name='foo.jpg')
-                        read_data = i.read()
+                            read_data = i.read()
                         # a = Images(user= self.request.user, imageby1 =read_data, imageby2 =read_data, imageby4 = base64.b64encode(read_data).decode('utf-8'), imageby3= base64.b64encode(read_data) , name= name, collection_name = album)
-                        a = Images(user= self.request.user, imageby= base64.b64encode(read_data).decode('utf-8'), name= name, collection_name = album)
-                        a.save()
-                    return JsonResponse({'error': False, 'message': 'Uploaded Successfully.'})
-                else:
-                    print("name already exist")
-                    return JsonResponse({'error': True, 'errors': {'name':'this','error':'Error , A folder with this name already exist, use a different name!'}})
-            except Exception as e:
-     
-                return JsonResponse({'error': True, 'errors': e})
-        
+                            a = Images(user= self.request.user, imageby= base64.b64encode(read_data).decode('utf-8'), name= name, collection_name = qs2)
+                            a.save()
+                    else:
+                        qss = get_object_or_404(User, username = self.request.user).profile
+                        qsn = qss.phonenumber
+                        album = Collection.objects.create(collname= collname, client = self.request.user, phonenumber=qsn)
+                        for i in images:
+                       
+                        #print(i.content_type)
+                            b =os.path.splitext(i.name)
+                        #print(b)
+                            print("imageeeeeeeeeeeee")
+                            name= i.name
+                            ext= b[1]
 
+                        
+                        #i= base64.b64encode(i.read())
+
+                        # image = ImageFile(io.BytesIO(i), name='foo.jpg')
+                            read_data = i.read()
+                        # a = Images(user= self.request.user, imageby1 =read_data, imageby2 =read_data, imageby4 = base64.b64encode(read_data).decode('utf-8'), imageby3= base64.b64encode(read_data) , name= name, collection_name = album)
+                            a = Images(user= self.request.user, imageby= base64.b64encode(read_data).decode('utf-8'), name= name, collection_name = album)
+                            a.save()
+                    print("returning success")
+                    return JsonResponse({'error': False, 'message': 'Uploaded Successfully.'})
+            except Exception as e:
+            	print(e)
+            	return JsonResponse({'error':True, 'errors':str(e)})
+   
+                 
+                        
+                       
 def redirect_view(request, *args, **kwargs):
     if request.user.is_authenticated:
         messages.success(request, "Your order was successful, read instructions below on how make payment!")
