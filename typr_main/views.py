@@ -393,7 +393,7 @@ class pending(View):
             except Exception as e:
                 cnotifica = None
     
-            qs  = Collection.objects.all().filter(client = self.request.user, job_status='Pending',  colldone="False")
+            qs  = Collection.objects.all().filter(client = self.request.user, job_status='Pending',  colldone="False", uploading = False)
         
             order_count = 0
             in_progress_count = 0
