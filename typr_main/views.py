@@ -184,7 +184,7 @@ class order(View):
         return redirect("typr_users:login")
 
     def post(self,*args, **kwargs):
-     
+        
         from django.http import JsonResponse
         
         if self.request.method =="POST":

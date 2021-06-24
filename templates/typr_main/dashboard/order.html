@@ -184,6 +184,7 @@ const uploadFile = (files,file,collection, file_len, current_num, upload) => {
 				
 			onthis.innerHTML= "Upload"
 			onthis.disabled = false
+			return
 			
         	
         }
@@ -210,6 +211,16 @@ const uploadFile = (files,file,collection, file_len, current_num, upload) => {
 		
 				
     }
+ request.timeout = 30000;
+ request.ontimeout = function (e) {
+    	alert("Time out!!!"); 
+    	righthere.innerHTML = "	<div class='alert alert-warning' style='background:white; color: green; font-size:14px;'>Slow internet connection, try again! </div>";
+     	onthis.innerHTML= "Upload"
+		onthis.disabled = false
+			
+    	
+    }
+  
 //formData.append({ 'k':'v' ,addcsrfmiddlewaretoken:'{{ csrf_token }}'}),
   formData.append("images", file);
   formData.append("collection", collection);
