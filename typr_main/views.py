@@ -193,7 +193,7 @@ class order(View):
                     upload_done = self.request.POST['upload_done']
                     print("upload_done", upload_done)
                 except Exception as e:
-                	print(e,"eeerroeeerr")
+                	pass
                 	
                 print("collname",collname)
                 print("images", images)
@@ -206,29 +206,29 @@ class order(View):
                 	    	i.delete()
                 	    print("deleted all prev")
                 except Exception as e:
-                	print(e)
-                	print("delete_prev is not defined.or something")
+                	pass
+                	
                
                 try:
                 	qs = Collection.objects.get(collname = collname, client= self.request.user, uploading=False)
                 except Exception as e:
                 	qs = None
-                	print(e)
-                	print(qs)
+                	
+                	
                 if qs != None:
                 	print("name clash")
                 	return JsonResponse({'error': True, 'errors': {'name':'this','error':'Error , A folder with this name already exist, use a different name!'}})
-                else:
-                	print("passing")
+                
+                
                 try:
                 	qs1 = Collection.objects.all().filter( client = self.request.user, job_status='Pending',  uploading = False)
                 except:
                 	qs1 = None
-                	print(e)
-                	print(qs1)
+                	
+                	
                 	
                 if len(qs1) > 0 :
-                	print("already uploaded")
+                	
                 	return JsonResponse({'error': True, 'errors': {'name':'this','error':'You already uploaded a folder, make payment for it at payment page or delete it from pending orders to create another one!!!'}})
                     
                 else:
@@ -238,7 +238,7 @@ class order(View):
                 	    qs2= Collection.objects.get(collname= collname, client= self.request.user, job_status = "Pending", uploading= True)
                 	except:
                 		qs2 = None
-                		print("1")
+                		
                 	if qs2:
                 	    qs2.uploading = False
                 	    qs2.save()
@@ -250,16 +250,16 @@ class order(View):
                         qs2 = Collection.objects.get(collname= collname, client= self.request.user, job_status = "Pending", uploading = True)
                     except:
                     	qs2 = None
-                    	print("2")
+                    	
                     	
                     if qs2 != None:
                     
                         for i in images:
                         	
                        
-                        #print(i.content_type)
+                        
                             b =os.path.splitext(i.name)
-                        #print(b)
+                        
                             print("imageeeeeeeeeeeee")
                             name= i.name
                             ext= b[1]
