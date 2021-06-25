@@ -161,7 +161,7 @@ function getCookie(name) {
 //	req.send(formData2);
 //};
 
-const uploadFile = (files,file,collection, file_len, current_num, upload) => {
+const uploadFile = (files,file,collection, file_len, current_num, upload, delete_prev) => {
   console.log("Uploading file...");
   
   const API_ENDPOINT = window.location.pathname;
@@ -195,9 +195,9 @@ const uploadFile = (files,file,collection, file_len, current_num, upload) => {
         	const vnum = current_num + 1;
            righthere.innerHTML ="<div class='alert alert-warning' style='background:white; color: green; font-size:14px;'>Uploaded "+vnum+" / "+file_len+" file(s)... please wait <img style='width:60px; height:52px;' src='{% static 'images/loader.gif'%}'/></div>";
        
-			
+			delete_prev = "False";
         	current_num = current_num + 1
-        	cusUpload(files, current_num, file_len, upload)
+        	cusUpload(files, current_num, file_len, upload, delete_prev)
          
         }
            
@@ -224,15 +224,17 @@ const uploadFile = (files,file,collection, file_len, current_num, upload) => {
 //formData.append({ 'k':'v' ,addcsrfmiddlewaretoken:'{{ csrf_token }}'}),
   formData.append("images", file);
   formData.append("collection", collection);
-  formData.append("upload_done", upload)
+  formData.append("upload_done", upload);
+  formData.append("delete_prev", delete_prev);
   request.send(formData);
+  
   
   
 };
 
-const cusUpload = (files, num, file_len, upload) =>{
+const cusUpload = (files, num, file_len, upload, delete_prev) =>{
 	if (num < file_len){
-	uploadFile(files, files[num], collection.value, file_len, num, upload);
+	uploadFile(files, files[num], collection.value, file_len, num, upload, delete_prev);
    }else{
    	
    	if(upload === "True"){
@@ -245,7 +247,8 @@ const cusUpload = (files, num, file_len, upload) =>{
    		//return
    	}else{
    	upload = "True";
-   	uploadFile(files,files[num], collection.value, file_len,num, upload);
+   
+   	uploadFile(files,files[num], collection.value, file_len,num, upload, delete_prev);
    	//finishUpload(collection.value);
    }
    }
@@ -269,8 +272,8 @@ onthis.disabled = true;
  let upload = "False";
  righthere.innerHTML ="<div class='alert alert-warning' style='background:white; color: green; font-size:14px;'>Uploading "+file_len+" file(s)... please wait <img style='width:60px; height:52px;' src='{% static 'images/loader.gif'%}'/></div>";
  
- 
- cusUpload(files, 0, file_len, upload);
+ const delete_prev = "True";
+ cusUpload(files, 0, file_len, upload, delete_prev);
 	
 });
   

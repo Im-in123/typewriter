@@ -27,7 +27,7 @@ from django.urls import reverse
 
 from django.http.response import HttpResponseRedirect
 
-
+from django.http import JsonResponse
 # def handler404(request, *args, **kwargs):
 #     #return HttpResponseRedirect('/')
 #     return render(request, "typr_main/home.html")
@@ -185,19 +185,29 @@ class order(View):
 
     def post(self,*args, **kwargs):
         
-        from django.http import JsonResponse
-        
         if self.request.method =="POST":
             try:
                 collname = self.request.POST['collection']
                 images = self.request.FILES.getlist('images')
                 try:
                     upload_done = self.request.POST['upload_done']
-                    print(upload_done)
+                    print("upload_done", upload_done)
                 except Exception as e:
-                	print(e,"3eeeeeeee")
-                print(collname)
-                print(images)
+                	print(e,"eeerroeeerr")
+                	
+                print("collname",collname)
+                print("images", images)
+                try:
+                	delete_prev = self.request.POST['delete_prev']
+                	print("delete_prev", delete_prev)
+                	if delete_prev == "True":
+                	    delp = Collection.objects.all().filter(client = self.request.user, uploading = True)
+                	    for i in delp:
+                	    	i.delete()
+                	    print("deleted all prev")
+                except Exception as e:
+                	print(e)
+                	print("delete_prev is not defined.or something")
                
                 try:
                 	qs = Collection.objects.get(collname = collname, client= self.request.user, uploading=False)
