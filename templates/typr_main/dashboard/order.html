@@ -92,17 +92,22 @@
 
 	   {% block me %}
 	 
-	   <div>
-
-	   </div>
-	  
-
+	    <div>
+      <img id="input" />
+    </div>
+    <center>
+    <div>
+    	<p>...</p>
+      <img id="output"/>
+    </div>
+    </center>
 			
 
 			
 	   {%endblock%}
 
 {% block scrippy %}
+
 
 <script type="text/javascript">
     // form upload
@@ -114,7 +119,40 @@ const formdiv = document.getElementById("myformid")
 let righthere = document.getElementById("righthere")
 let onthis = document.getElementById("onthis")
 	
-    
+function process(pf) {
+  const file = pf
+
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.readAsDataURL(file);
+
+  reader.onload = function (event) {
+    const imgElement = document.createElement("img");
+    imgElement.src = event.target.result;
+    //document.querySelector("#input").src = event.target.result;
+
+    imgElement.onload = function (e) {
+      const canvas = document.createElement("canvas");
+      const MAX_WIDTH = 250//400;
+
+      const scaleSize = MAX_WIDTH / e.target.width;
+      canvas.width = MAX_WIDTH;
+      canvas.height = e.target.height * scaleSize;
+
+      const ctx = canvas.getContext("2d");
+
+      ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height);
+
+      const srcEncoded = ctx.canvas.toDataURL(e.target, "image/jpeg");
+ 
+      // you can send srcEncoded to the server
+     var ty= document.querySelector("#output").src = srcEncoded;
+     return ty;
+    };
+  };
+}
  
 function getCookie(name) {
     var cookieValue = null;
@@ -179,6 +217,7 @@ const uploadFile = (files,file,collection, file_len, current_num, upload, delete
         const res = request.response
         const reserr = res.error
         if (reserr){
+        	
         //	alert(res.errors.error)
         	righthere.innerHTML = "	<div class='alert alert-warning' style='color: red; font-size:14px;'>"+ res.errors.error +"</div>";
 				
@@ -197,26 +236,46 @@ const uploadFile = (files,file,collection, file_len, current_num, upload, delete
        
 			delete_prev = "False";
         	current_num = current_num + 1
-        	cusUpload(files, current_num, file_len, upload, delete_prev)
-         
+        	counter1 = 0;
+        	//cusUpload(files, current_num, file_len, upload, delete_prev)
+        	uploadFile(files,file, collection,file_len, current_num,upload,delete_prev);
         }
            
   }
-  
    request.onerror = function() {
         alert("An error occurred connecting to Server. Please try again later.");
         righthere.innerHTML = "	<div class='alert alert-warning' style='background:white; color: green; font-size:14px;'>Slow network, try again! </div>";
 		onthis.innerHTML= "Upload";
 		onthis.disabled = false;
-		
-				
+
     }
- request.timeout = 30000;
+ request.timeout = 10000;
  request.ontimeout = function (e) {
-    	alert("Time out!!!"); 
-    	righthere.innerHTML = "	<div class='alert alert-warning' style='background:white; color: green; font-size:14px;'>Slow internet connection, try again! </div>";
-     	onthis.innerHTML= "Upload"
-		onthis.disabled = false
+    //	alert("Time out!!!"); 
+    //alert(counter1)
+    	try{
+    		
+    		if (counter1 < 2){
+    			alert("retrying.. "+ counter1)
+    			counter1 = counter1 + 1;
+    	//	for(i=0; i<counter1; i++){
+    	      cusUpload(files,current_num,file_len,upload,delete_prev);
+    		}else{
+    			alert("skipping num :"+counter1)
+    			counter1 = 0
+    			alert("Timeout !");
+    			righthere.innerHTML = "	<div class='alert alert-warning' style='background:white; color: green; font-size:14px;'>Slow network, try again! </div>";
+				onthis.innerHTML= "Upload"
+				onthis.disabled = false
+	
+    		}
+    		
+    	}catch(e){
+    		alert(e)
+    	}
+    //	righthere.innerHTML = "	<div class='alert alert-warning' style='background:white; color: green; font-size:14px;'>Slow internet connection, try again! </div>";
+    // 	onthis.innerHTML= "Upload"
+	//	onthis.disabled = false
 			
     	
     }
@@ -234,7 +293,8 @@ const uploadFile = (files,file,collection, file_len, current_num, upload, delete
 
 const cusUpload = (files, num, file_len, upload, delete_prev) =>{
 	if (num < file_len){
-	uploadFile(files, files[num], collection.value, file_len, num, upload, delete_prev);
+		process(files[num])
+	    uploadFile(files, files[num], collection.value, file_len, num, upload, delete_prev);
    }else{
    	
    	if(upload === "True"){
@@ -253,7 +313,7 @@ const cusUpload = (files, num, file_len, upload, delete_prev) =>{
    }
    }
 }
-
+let counter1= 0;
 //alert("welcome")
 formdiv.addEventListener("submit", event => {
 event.preventDefault();
@@ -273,6 +333,21 @@ onthis.disabled = true;
  righthere.innerHTML ="<div class='alert alert-warning' style='background:white; color: green; font-size:14px;'>Uploading "+file_len+" file(s)... please wait <img style='width:60px; height:52px;' src='{% static 'images/loader.gif'%}'/></div>";
  
  const delete_prev = "True";
+try{
+ //	alert('This file size is: ' + files[0].size/1024/1024 + "MiB");
+ //	let pr1= process(files[0]);
+ 	let zz= 1;
+   //alert('This second size is: ' + pr2[0].size/1024/1024 + "MiB");
+ //	var compr = window.pako.deflate(files[0]);
+ //	alert('This compressed size is: ' + compr.size/1024/1024 + "MiB");
+        
+
+ }catch(err){
+ 	alert(err)
+ 	
+    }
+
+ 
  cusUpload(files, 0, file_len, upload, delete_prev);
 	
 });

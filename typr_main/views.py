@@ -197,6 +197,7 @@ class order(View):
                 	
                 print("collname",collname)
                 print("images", images)
+                
                 try:
                 	delete_prev = self.request.POST['delete_prev']
                 	print("delete_prev", delete_prev)
@@ -207,6 +208,7 @@ class order(View):
                 	    print("deleted all prev")
                 except Exception as e:
                 	pass
+                #input()
                 	
                
                 try:
