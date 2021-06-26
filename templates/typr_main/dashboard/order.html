@@ -262,7 +262,7 @@ const uploadFile = (files,file,collection, file_len, current_num, upload, delete
     	      uploadFile(files,file,collection,file_len,current_num, upload, delete_prev);
     	      //(files,current_num,file_len,upload,delete_prev);
     		}else{
-    			alert("skipping num :"+counter1)
+    			alert("skipping :"+counter1)
     			counter1 = 0
     			alert("Timeout !");
     			righthere.innerHTML = "	<div class='alert alert-warning' style='background:white; color: green; font-size:14px;'>Slow network, try again! </div>";
@@ -294,8 +294,7 @@ const uploadFile = (files,file,collection, file_len, current_num, upload, delete
 
 const cusUpload = (files, num, file_len, upload, delete_prev) =>{
 	if (num < file_len){
-		alert(num)
-		process(files[num])
+    	process(files[num])
 	    uploadFile(files, files[num], collection.value, file_len, num, upload, delete_prev);
    }else{
    //	alert(num)
@@ -308,11 +307,11 @@ const cusUpload = (files, num, file_len, upload, delete_prev) =>{
          
    		//return
    	}else{
-   	upload = "True";
+   	   upload = "True";
    
-   	uploadFile(files,files[num], collection.value, file_len,num, upload, delete_prev);
+   	  uploadFile(files,files[num], collection.value, file_len,num, upload, delete_prev);
    	//finishUpload(collection.value);
-   }
+     }
    }
 }
 let counter1= 0;
