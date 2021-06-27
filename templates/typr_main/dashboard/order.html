@@ -256,13 +256,13 @@ const uploadFile = (files,file,collection, file_len, current_num, upload, delete
     	try{
     		
     		if (counter1 < 2){
-    			alert("retrying.. "+ counter1)
+    		//	alert("retrying.. "+ counter1)
     			counter1 = counter1 + 1;
     	//	for(i=0; i<counter1; i++){
     	      uploadFile(files,file,collection,file_len,current_num, upload, delete_prev);
     	      //(files,current_num,file_len,upload,delete_prev);
     		}else{
-    			alert("skipping :"+counter1)
+    		//	alert("skipping :"+counter1)
     			counter1 = 0
     			alert("Timeout !");
     			righthere.innerHTML = "	<div class='alert alert-warning' style='background:white; color: green; font-size:14px;'>Slow network, try again! </div>";
@@ -284,7 +284,7 @@ const uploadFile = (files,file,collection, file_len, current_num, upload, delete
 			
    // righthere.innerHTML = "Try again"	
     //alert(e)
-    alert("endpart, "+counter1)
+    console.log("c");//alert("endpart, "+counter1)
     }
   
 //formData.append({ 'k':'v' ,addcsrfmiddlewaretoken:'{{ csrf_token }}'}),
