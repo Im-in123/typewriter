@@ -249,7 +249,7 @@ const uploadFile = (files,file,collection, file_len, current_num, upload, delete
 		onthis.disabled = false;
 
     }
- request.timeout = 37000;
+ request.timeout = 35000;
  request.ontimeout = function (e) {
     //	alert("Time out!!!"); 
     //alert(counter1)
@@ -268,6 +268,7 @@ const uploadFile = (files,file,collection, file_len, current_num, upload, delete
     			righthere.innerHTML = "	<div class='alert alert-warning' style='background:white; color: green; font-size:14px;'>Slow network, try again! </div>";
 				onthis.innerHTML= "Upload"
 				onthis.disabled = false
+				return
 	
     		}
     		
@@ -281,7 +282,9 @@ const uploadFile = (files,file,collection, file_len, current_num, upload, delete
     // 	onthis.innerHTML= "Upload"
 	//	onthis.disabled = false
 			
-    	
+    righthere.innerHTML = "Try again"	
+    onthis.innerHTML = "upload"
+    onthis.disabled = false
     }
   
 //formData.append({ 'k':'v' ,addcsrfmiddlewaretoken:'{{ csrf_token }}'}),
