@@ -755,7 +755,7 @@ class super_pending(View):
     def get(self, *args, **kwargs):
         if self.request.user.is_authenticated:
             if self.request.user.is_superuser:
-                qs = Collection.objects.all().filter(job_status="Pending", paid_option=False)
+                qs = Collection.objects.all().filter(job_status="Pending", paid_option=False, uploading=False)
                 context  = {
                 'collection':qs,
                    }   
