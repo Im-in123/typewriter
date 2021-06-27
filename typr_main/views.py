@@ -208,7 +208,7 @@ class order(View):
                 	    print("deleted all prev")
                 except Exception as e:
                 	pass
-                #input()
+              #  input()
                 	
                
                 try:
