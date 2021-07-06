@@ -80,7 +80,28 @@ def dashboard(request, *args, **kwargs):
                 cnotifica = None
                 print(e, '''''''''''''''''''''''''')
 
-        
+# def view_notify(currentView,cnotifica):
+#     if cnotifica != None:
+#         for a in cnotifica:
+#             if a.target=="currentView":
+#                 a.viewed = True
+#                 a.save()
+            
+#             elif a.target == "pending":
+#                 pending_count += 1
+#             elif a.target == "order":
+#                 order_count += 1
+#             elif a.target == "in_progress":
+#                 in_progress_count += 1
+#             elif a.target == "completed":
+#                 completed_count += 1
+#             elif a.target == "payment":
+#                 payment_count += 1
+#             else:
+#                 pass
+
+
+    
         summary = Collection.objects.all().filter(client= request.user, uploading= False).order_by("id")
         payment_count = 0
         order_count = 0
