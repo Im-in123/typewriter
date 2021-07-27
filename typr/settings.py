@@ -126,7 +126,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-SECURE_SSL_REDIRECT = True
+#SECURE_SSL_REDIRECT = True
 CSRF_COOKIE_SECURE = True
 SECURE_REFERRER_POLICY = "no-referrer-when-downgrade"
 SECURE_CONTENT_TYPE_NOSNIFF = True
